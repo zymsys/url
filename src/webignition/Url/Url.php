@@ -472,7 +472,10 @@ class Url {
         $this->originUrl = substr_replace($this->originUrl, $value, $offsets[$partName], strlen($this->getPart($partName)));
 
         if ($partName === 'pass' && !$this->hasUser()) {
+            var_dump("Clearing empty creds");
+            var_dump("before", $this->originUrl);
             $this->clearEmptyCredentials();
+            var_dump("after", $this->originUrl);
         }
     }
 
