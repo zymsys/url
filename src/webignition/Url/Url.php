@@ -248,8 +248,8 @@ class Url {
      *
      * @return string
      */
-    public function getPass($debugMode = false) {
-        return $this->getPart('pass', $debugMode);
+    public function getPass() {
+        return $this->getPart('pass');
     }
     
     
@@ -431,7 +431,7 @@ class Url {
         if ($this->hasPart($partName)) {
             $this->replacePart($partName, $value);
         } else {
-            var_dump("Adding part");
+            //var_dump("Adding part");
             $this->addPart($partName, $value);            
         }
 
@@ -475,6 +475,10 @@ class Url {
     
     
     private function addPart($partName, $value) {
+        if (is_null($value)) {
+            return true;
+        }
+
         if ($partName == 'scheme') {
             return $this->addScheme($value);
         }
@@ -576,36 +580,36 @@ class Url {
     
     
     private function addPass($pass) {
-        var_dump("Adding pass");
+        //var_dump("Adding pass");
 
         if ($this->hasPass()) {
-            var_dump("Stopping, already has");
+            //var_dump("Stopping, already has");
             return false;
         }       
         
         // A pass cannot be added to a URL that has no host; this results in
         // an invalid URL.
         if (!$this->hasHost()) {
-            var_dump("Stopping, no host");
+            //var_dump("Stopping, no host");
             return false;
         }
         
         $offsets = &$this->offsets();
         
         if ($this->hasUser()) {
-            var_dump("has user");
+            //var_dump("has user");
             $preNewPart = substr($this->originUrl, 0, $offsets['host'] - 1);
             $postNewPart = substr($this->originUrl, $offsets['host'] - 1);
 
             return $this->originUrl = $preNewPart . $pass . $postNewPart;
         }
 
-        var_dump("not has user");
+        //var_dump("not has user");
         
         $preNewPart = substr($this->originUrl, 0, $offsets['host']);
         $postNewPart = substr($this->originUrl, $offsets['host']);
 
-        var_dump($preNewPart . ':' . $pass . '@' . $postNewPart);
+        //var_dump($preNewPart . ':' . $pass . '@' . $postNewPart);
 
         return $this->originUrl = $preNewPart . ':' . $pass . '@' . $postNewPart;        
     }
@@ -853,12 +857,12 @@ class Url {
      * @param string $partName
      * @return mixed
      */
-    protected function getPart($partName, $debugMode = false) {
+    protected function getPart($partName) {
         $parts = &$this->parts();
 
-        if ($debugMode === true) {
-            var_dump("getPart parts", $parts);
-        }
+//        if ($debugMode === true) {
+//            var_dump("getPart parts", $parts);
+//        }
         
         return (isset($parts[$partName])) ? $parts[$partName] : null;
     }

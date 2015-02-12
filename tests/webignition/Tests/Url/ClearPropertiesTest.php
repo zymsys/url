@@ -30,7 +30,7 @@ class ClearPropertiesTest extends AbstractRegularUrlTest {
 
         //var_dump("testAddNullPass getPass()", $url->getPass());
 
-        $this->assertNull($url->getPass(true));
+        $this->assertNull($url->getPass());
         //$this->assertEquals("http://example.com/", (string)$url);
     }     
     
