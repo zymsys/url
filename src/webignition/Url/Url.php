@@ -468,10 +468,25 @@ class Url {
 
             return;
         }
-        
-        $this->originUrl = substr_replace($this->originUrl, $value, $offsets[$partName], strlen($this->getPart($partName)));  
+
+        $this->originUrl = substr_replace($this->originUrl, $value, $offsets[$partName], strlen($this->getPart($partName)));
+
+        if ($partName === 'pass' && !$this->hasUser()) {
+            $this->clearEmptyCredentials();
+        }
     }
-    
+
+    private function clearEmptyCredentials() {
+        $emptyCredentialsPrefix = $this->getScheme() . '://:@' . $this->getHost();
+
+        if (substr($this->originUrl, 0, strlen($emptyCredentialsPrefix)) != $emptyCredentialsPrefix) {
+            return true;
+        }
+
+        $nonSchemeHostSuffix = substr($this->originUrl, strlen($emptyCredentialsPrefix));
+
+        $this->originUrl = $this->getScheme() . '://' . $this->getHost() . $nonSchemeHostSuffix;
+    }
     
     private function addPart($partName, $value) {
         if (is_null($value)) {
