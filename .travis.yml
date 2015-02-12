@@ -10,6 +10,9 @@ php:
 before_script:
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
+
+script:
+  - phpunit tests/webignition/Tests/Url/ClearPropertiesTest.php
   
 matrix:
   allow_failures:
