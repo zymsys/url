@@ -845,6 +845,8 @@ class Url {
      */
     protected function getPart($partName) {        
         $parts = &$this->parts();
+
+        var_dump($parts);
         
         return (isset($parts[$partName])) ? $parts[$partName] : null;
     }
