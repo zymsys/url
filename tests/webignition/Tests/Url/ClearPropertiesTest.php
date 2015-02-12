@@ -26,9 +26,9 @@ class ClearPropertiesTest extends AbstractRegularUrlTest {
     
     public function testAddNullPass() {        
         $url = new \webignition\Url\Url('http://example.com/');
-        //$url->setPass(null);
+        $url->setPass(null);
 
-        var_dump($url->getPass());
+        var_dump("testAddNullPass getPass()", $url->getPass());
 
         $this->assertNull($url->getPass());
         //$this->assertEquals("http://example.com/", (string)$url);
